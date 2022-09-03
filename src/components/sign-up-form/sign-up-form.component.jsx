@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
+
+import { UserContext } from "../../contexts/user.context";
 
 import "./sign-up-form.styles.scss";
 
@@ -18,6 +20,8 @@ const defaultFormFields = {
 const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
+
+  const { setCurrentUser } = useContext(UserContext);
 
   console.log(formFields);
 
@@ -38,17 +42,18 @@ const SignUpForm = () => {
         email,
         password
       );
-      console.log(user);
 
       await createUserDocumentFromAuth(user, { displayName });
+
+      setCurrentUser(user);
 
       resetFormFields();
     } catch (err) {
       switch (err.code) {
-        case 'auth/email-already-in-use':
+        case "auth/email-already-in-use":
           alert("Email already in use");
           break;
-        case 'auth/weak-password':
+        case "auth/weak-password":
           alert("Passwords must contain at least 6 characters");
           break;
         default:
