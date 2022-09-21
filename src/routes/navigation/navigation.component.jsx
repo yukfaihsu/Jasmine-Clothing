@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { CartContext } from "../../contexts/cart.context";
-import { selectorCurrentUser } from "../../store/user/user.selector";
+import { selectCurrentUser } from "../../store/user/user.selector";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import { ReactComponent as JasLogo } from "../../assets/jasmine.svg";
@@ -18,7 +18,7 @@ import {
 } from "./navigation.styles";
 
 const Navigation = () => {
-  const currentUser = useSelector(selectorCurrentUser);
+  const currentUser = useSelector(selectCurrentUser);
   const { isCartOpen } = useContext(CartContext);
 
   return (
