@@ -8,7 +8,7 @@ import {
 } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
 
-import { clearItemFromCart } from "../../store/cart/cart.action";
+import { clearAllItemFromCart } from "../../store/cart/cart.action";
 
 import { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
@@ -64,7 +64,7 @@ const PaymentForm = () => {
     } else {
       if (paymentResult.paymentIntent.status === "succeeded") {
         alert("Payment Successful");
-        cartItems.map(item => dispatch(clearItemFromCart(cartItems, item)))
+        dispatch(clearAllItemFromCart(cartItems));
       }
     }
   };
